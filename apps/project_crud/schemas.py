@@ -5,10 +5,14 @@ class ProductBase(BaseModel):
     name: str
     description: str
     price: int
-    brand_id: int
+    brand_id: int | None
 
 
 class ProductCreate(ProductBase):
+    pass
+
+
+class ProductUpdate(ProductBase):
     pass
 
 
@@ -24,6 +28,10 @@ class BrandBase(BaseModel):
 
 
 class BrandCreate(BrandBase):
+    pass
+
+
+class BrandUpdate(BrandBase):
     pass
 
 

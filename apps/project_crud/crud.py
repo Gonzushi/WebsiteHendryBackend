@@ -11,8 +11,8 @@ def create_brand(db: Session, brand: schemas.BrandCreate):
     return db_brand
 
 
-def update_brand(db: Session, brand: schemas.Brand):
-    db_brand = db.query(models.Brand).get(brand.id)
+def update_brand(db: Session, brand_id: int, brand: schemas.BrandUpdate):
+    db_brand = db.query(models.Brand).get(brand_id)
     for key, value in brand.model_dump().items():
         setattr(db_brand, key, value)
     db.add(db_brand)
@@ -25,7 +25,6 @@ def delete_brand(db: Session, brand_id: int):
     db_brand = db.get(models.Brand, brand_id)
     db.delete(db_brand)
     db.commit()
-    return db_brand
 
 
 def get_brand(db: Session, brand_id: int):
@@ -50,8 +49,8 @@ def create_product(db: Session, product: schemas.Product):
     return db_product
 
 
-def update_product(db: Session, product: schemas.Product):
-    db_product = db.query(models.Product).get(product.id)
+def update_product(db: Session, product_id: int, product: schemas.ProductUpdate):
+    db_product = db.query(models.Product).get(product_id)
     for key, value in product.model_dump().items():
         setattr(db_product, key, value)
     db.add(db_product)
@@ -64,7 +63,6 @@ def delete_product(db: Session, product_id: int):
     db_product = db.get(models.Product, product_id)
     db.delete(db_product)
     db.commit()
-    return db_product
 
 
 def get_product(db: Session, product_id: int):
@@ -79,11 +77,3 @@ def get_products(db: Session, skip: int = 0, limit: int = 100):
         .limit(limit)
         .all()
     )
-
-
-# def create_brand_product(db: Session, product: schemas.ProductCreate, brand_id: int):
-#     db_product = models.Product(**product.model_dump(), owner_id=brand_id)
-#     db.add(db_product)
-#     db.commit()
-#     db.refresh(db_product)
-#     return db_product

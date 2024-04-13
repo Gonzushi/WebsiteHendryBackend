@@ -17,9 +17,9 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from apps.sql.models import Base
+from apps.project_crud.models import Base as BaseProjectCrud
 
-target_metadata = Base.metadata
+target_metadata = [BaseProjectCrud.metadata]
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,

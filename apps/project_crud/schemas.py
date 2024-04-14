@@ -16,6 +16,15 @@ class ProductUpdate(ProductBase):
     pass
 
 
+class ProductRead(ProductBase):
+    id: int
+
+
+class ProductReads(BaseModel):
+    total: int
+    records: list[ProductRead]
+
+
 class Product(ProductBase):
     id: int
 

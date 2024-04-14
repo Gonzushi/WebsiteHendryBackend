@@ -15,7 +15,6 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(project_crud_api.router)
 
 origins = [
     "http://localhost:5173",
@@ -30,6 +29,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(project_crud_api.router)
 
 
 @app.get("/")

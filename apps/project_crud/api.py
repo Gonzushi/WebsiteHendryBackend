@@ -92,7 +92,7 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
     return db_product
 
 
-@router.get("/product/", response_model=list[schemas.Product])
+@router.get("/product/", response_model=schemas.ProductReads)
 def read_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     products = crud.get_products(db, skip=skip, limit=limit)
     return products

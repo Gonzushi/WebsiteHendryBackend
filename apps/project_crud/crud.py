@@ -31,13 +31,7 @@ def get_brand(db: Session, brand_id: int):
     return db.get(models.Brand, brand_id)
 
 
-def get_brands(db: Session, skip: int = 0, limit: int = 100) -> schemas.BrandReads:
-    total: int = db.query(models.Brand).count()
-    records = (
-        db.query(models.Brand).order_by(models.Brand.id).offset(skip).limit(limit).all()
-    )
-    output = {"total": total, "records": records}
-    return output
+
 
 
 def get_brand_by_name(db: Session, brand_name: str):
@@ -72,11 +66,18 @@ def get_product(db: Session, product_id: int):
     return db.get(models.Product, product_id)
 
 
-def get_products(db: Session, skip: int = 0, limit: int = 100):
-    return (
-        db.query(models.Product)
-        .order_by(models.Product.id)
-        .offset(skip)
-        .limit(limit)
-        .all()
+def get_brands(db: Session, skip: int = 0, limit: int = 100) -> schemas.BrandReads:
+    total: int = db.query(models.Brand).count()
+    records = (
+        db.query(models.Brand).order_by(models.Brand.id).offset(skip).limit(limit).all()
     )
+    output = {"total": total, "records": records}
+    return output
+
+def get_products(db: Session, skip: int = 0, limit: int = 100)  -> schemas.ProductReads:
+    total: int = db.query(models.Product).count()
+    records = (
+        db.query(models.Product).order_by(models.Product.id).offset(skip).limit(limit).all()
+    )
+    output = {"total": total, "records": records}
+    return output

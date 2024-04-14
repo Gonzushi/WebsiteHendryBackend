@@ -22,9 +22,9 @@ class Product(Base):
     __tablename__ = "product"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(255), unique=True, index=True)
-    description: Mapped[str] = mapped_column(String(255), unique=True, index=True)
-    price: Mapped[int] = mapped_column()
+    name: Mapped[str] = mapped_column(String(255), index=True, nullable=True)
+    description: Mapped[str] = mapped_column(String(255), index=True, nullable=True)
+    price: Mapped[int] = mapped_column(nullable=True)
     brand_id: Mapped[int | None] = mapped_column(
         ForeignKey("brand.id", ondelete="NO ACTION"), nullable=True
     )

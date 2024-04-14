@@ -59,7 +59,7 @@ def read_brands(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)):
     db_brand = crud.get_brand(db, brand_id=product.brand_id)
     if db_brand is None:
-        raise HTTPException(status_code=404, detail="Brand not found")
+        raise HTTPException(status_code=404, detail="Brand ID not found")
     return crud.create_product(db=db, product=product)
 
 
@@ -70,7 +70,7 @@ def update_product(
     db_product = crud.get_product(db, product_id)
     db_brand = crud.get_brand(db, product.brand_id)
     if db_brand is None:
-        product.brand_id = None
+        raise HTTPException(status_code=404, detail="Brand ID not found")
     if db_product is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return crud.update_product(db=db, product_id=product_id, product=product)

@@ -96,3 +96,9 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
 def read_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     products = crud.get_products(db, skip=skip, limit=limit)
     return products
+
+
+@router.get("/", response_model=schemas.AllData)
+def read_all_data(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    data = crud.get_all_data(db, skip=skip, limit=limit)
+    return data

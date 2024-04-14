@@ -59,3 +59,17 @@ class Brand(BrandBase):
 
     class Config:
         from_attributes = True
+
+
+class Data(BaseModel):
+    product_name: str
+    brand_name: str
+    description: str
+    price: int
+    brand_id: int
+    product_id: int
+
+
+class AllData(BaseModel):
+    total: int
+    records: list[Data]

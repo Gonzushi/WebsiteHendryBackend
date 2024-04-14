@@ -1,3 +1,4 @@
+import pandas as pd
 from sqlalchemy.orm import Session
 
 from apps.project_crud import models, schemas
@@ -29,9 +30,6 @@ def delete_brand(db: Session, brand_id: int):
 
 def get_brand(db: Session, brand_id: int):
     return db.get(models.Brand, brand_id)
-
-
-
 
 
 def get_brand_by_name(db: Session, brand_name: str):
@@ -69,15 +67,56 @@ def get_product(db: Session, product_id: int):
 def get_brands(db: Session, skip: int = 0, limit: int = 100) -> schemas.BrandReads:
     total: int = db.query(models.Brand).count()
     records = (
-        db.query(models.Brand).order_by(models.Brand.id).offset(skip).limit(limit).all()
+        db.query(models.Brand)
+        .order_by(models.Brand.id.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
     )
     output = {"total": total, "records": records}
     return output
 
-def get_products(db: Session, skip: int = 0, limit: int = 100)  -> schemas.ProductReads:
+
+def get_products(db: Session, skip: int = 0, limit: int = 100) -> schemas.ProductReads:
     total: int = db.query(models.Product).count()
     records = (
-        db.query(models.Product).order_by(models.Product.id).offset(skip).limit(limit).all()
+        db.query(models.Product)
+        .order_by(models.Product.id.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
     )
     output = {"total": total, "records": records}
+    return output
+
+
+def get_all_data(db: Session, skip: int = 0, limit: int = 100) -> schemas.AllData:
+    brands = []
+    products = []
+    raw_brands = db.query(models.Brand).all()
+    raw_products = db.query(models.Product).all()
+
+    for each in raw_brands:
+        brands.append(each.__dict__)
+
+    for each in raw_products:
+        products.append(each.__dict__)
+
+    df_brands = pd.DataFrame(brands)
+    df_products = pd.DataFrame(products)
+    df_brands.drop(["_sa_instance_state"], axis=1, inplace=True)
+    df_products.drop(["_sa_instance_state"], axis=1, inplace=True)
+    df_brands.rename(columns={"id": "brand_id", "name": "brand_name"}, inplace=True)
+    df_products.rename(
+        columns={"id": "product_id", "name": "product_name"}, inplace=True
+    )
+    df = pd.merge(df_brands, df_products, how="left", on="brand_id")
+    df = df.sort_values(by=["product_name"])
+
+    total = len(df)
+    records = df[skip : skip + limit].to_dict("records")
+    output = {"total": total, "records": records}
+    print("-" * 100)
+    print(output)
+    print("-" * 100)
     return output

@@ -31,10 +31,13 @@ def get_brand(db: Session, brand_id: int):
     return db.get(models.Brand, brand_id)
 
 
-def get_brands(db: Session, skip: int = 0, limit: int = 100):
-    return (
+def get_brands(db: Session, skip: int = 0, limit: int = 100) -> schemas.BrandReads:
+    total: int = db.query(models.Brand).count()
+    records = (
         db.query(models.Brand).order_by(models.Brand.id).offset(skip).limit(limit).all()
     )
+    output = {"total": total, "records": records}
+    return output
 
 
 def get_brand_by_name(db: Session, brand_name: str):

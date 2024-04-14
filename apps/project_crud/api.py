@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from apps.project_crud import crud, schemas
@@ -49,7 +49,7 @@ def read_brand(brand_id: int, db: Session = Depends(get_db)):
     return db_brand
 
 
-@router.get("/brand/", response_model=list[schemas.Brand])
+@router.get("/brand/", response_model=schemas.BrandReads)
 def read_brands(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     brands = crud.get_brands(db, skip=skip, limit=limit)
     return brands

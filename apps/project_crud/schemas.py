@@ -27,6 +27,15 @@ class BrandBase(BaseModel):
     name: str
 
 
+class BrandRead(BrandBase):
+    id: int
+
+
+class BrandReads(BaseModel):
+    total: int
+    records: list[BrandRead]
+
+
 class BrandCreate(BrandBase):
     pass
 

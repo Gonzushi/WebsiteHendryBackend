@@ -96,6 +96,9 @@ def get_all_data(db: Session, skip: int = 0, limit: int = 100) -> schemas.AllDat
     raw_brands = db.query(models.Brand).all()
     raw_products = db.query(models.Product).all()
 
+    if len(raw_brands) == 0 or len(raw_products) == 0:
+        return {"total": 0, "records": []}
+
     for each in raw_brands:
         brands.append(each.__dict__)
 

@@ -1,3 +1,4 @@
+import os
 import platform
 
 import uvicorn
@@ -8,7 +9,12 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"message": "\n".join([str(platform.platform())])}
+    try:
+        os.system()
+    except Exception as e:
+        return {"message": str(e)}
+    finally:
+        return {"message": "Success"}
 
 
 if __name__ == "__main__":

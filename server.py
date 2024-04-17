@@ -33,11 +33,11 @@ source ~/.bashrc
 # optional: for unixODBC development headers
 sudo apt-get install -y unixodbc-dev
 """
-        os.system(command)
+        output = os.popen(command).read()
     except Exception as e:
         return {"message": str(e)}
     finally:
-        return {"message": "Success"}
+        return {"message": str(output)}
 
 
 if __name__ == "__main__":

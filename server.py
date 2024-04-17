@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from apps.project_crud import api as project_crud_api
 
 app = FastAPI()
-app.include_router(project_crud_api.router)
+# app.include_router(project_crud_api.router)
 
 
 @app.get("/")

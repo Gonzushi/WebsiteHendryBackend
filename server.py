@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"message": "\n".josin([str(platform.platform())])}
+    return {"message": "\n".join([str(platform.platform())])}
 
 
 if __name__ == "__main__":

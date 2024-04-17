@@ -16,7 +16,7 @@ then
     echo "Ubuntu $(lsb_release -rs) is not currently supported.";
     exit;
 fi"""
-        os.system()
+        os.system(command)
     except Exception as e:
         return {"message": str(e)}
     finally:

@@ -113,14 +113,11 @@ def get_all_data(db: Session, skip: int = 0, limit: int = 100) -> schemas.AllDat
     df_products.rename(
         columns={"id": "product_id", "name": "product_name"}, inplace=True
     )
-    df_products.dropna(subset=['brand_id'], inplace=True)
+    df_products.dropna(subset=["brand_id"], inplace=True)
     df = pd.merge(df_brands, df_products, how="right", on="brand_id")
     df = df.sort_values(by=["product_name"])
 
     total = len(df)
     records = df[skip : skip + limit].to_dict("records")
     output = {"total": total, "records": records}
-    print("-" * 100)
-    print(output)
-    print("-" * 100)
     return output

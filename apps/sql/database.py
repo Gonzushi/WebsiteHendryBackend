@@ -1,10 +1,7 @@
 from os import getenv
 
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-load_dotenv()
 
 SERVER = getenv("SQL_SERVER")
 USER = getenv("SQL_USERNAME")

@@ -2,19 +2,24 @@ import os
 import signal
 from contextlib import asynccontextmanager
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from apps.project_crud import api as project_crud_api
+from apps.analytics import api as analytics_api
+from apps.project_crud import api as project_api
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    load_dotenv()
     yield
     os.kill(os.getpid(), signal.SIGTERM)
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(project_api.router)
+app.include_router(analytics_api.router)
 
 origins = [
     "http://localhost:5173",
@@ -29,8 +34,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.include_router(project_crud_api.router)
 
 
 @app.get("/")

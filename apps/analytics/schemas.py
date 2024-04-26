@@ -26,6 +26,7 @@ class VisitorRead(VisitorBase):
 
 
 class EventBase(BaseModel):
+    session_id: str
     ip_address: str
     type: str
     description: str

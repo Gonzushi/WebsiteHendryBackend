@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class VisitorBase(BaseModel):
+class Visitor(BaseModel):
     session_id: str
     ip_address: str
     country_code: str
@@ -17,20 +17,8 @@ class VisitorBase(BaseModel):
     is_proxy: str
 
 
-class VisitorCreate(BaseModel):
-    ip_address: str
-
-
-class VisitorRead(VisitorBase):
-    pass
-
-
-class EventBase(BaseModel):
+class Event(BaseModel):
     session_id: str
     ip_address: str
     type: str
     description: str
-
-
-class EventCreate(EventBase):
-    session_id: str

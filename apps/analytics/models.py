@@ -32,6 +32,7 @@ class Event(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=False)
+    ip_address: Mapped[str] = mapped_column(String(15))
     session_id: Mapped[str] = mapped_column(
         ForeignKey("visitors.session_id"), nullable=False
     )

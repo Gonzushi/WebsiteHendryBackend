@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from apps.analytics import crud, models, schemas
@@ -16,21 +16,14 @@ router = APIRouter(
 
 @router.post("/event")
 def create_event(
-    event: schemas.EventBase,
+    event: schemas.Event,
     db: Session = Depends(get_db),
 ):
-
-    session_id = event.session_id
-    visitor: models.Visitor = crud.get_visitor(db, session_id)
+    visitor: models.Visitor = crud.get_visitor(db, event.session_id)
     if visitor is None:
-        session_id = None
-    else:
-        session_id = visitor.session_id
+        event.session_id = str(uuid.uuid4())
+        crud.create_visitor(db, event)
 
-    if session_id is None:
-        session_id = str(uuid.uuid4())
-        crud.create_visitor(db, session_id, event.ip_address)
+    crud.create_event(db, event)
 
-    crud.create_event(db, session_id, event)
-
-    return {"session_id": session_id}
+    return {"session_id": event.session_id}

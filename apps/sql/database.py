@@ -3,11 +3,7 @@ from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-SERVER = getenv("SQL_SERVER")
-USER = getenv("SQL_USERNAME")
-PASSWORD = getenv("SQL_PASSWORD")
-DATABASE_NAME = getenv("SQL_DATABASE_NAME")
-ODBC_VERSION = getenv("SQL_ODBC_VERSION")
+from apps.env import DATABASE_NAME, ODBC_VERSION, PASSWORD, SERVER, USER
 
 params_url = (
     f"?driver=ODBC+Driver+{ODBC_VERSION}+for+SQL+Server"

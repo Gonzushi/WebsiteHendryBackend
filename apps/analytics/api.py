@@ -27,3 +27,9 @@ def create_event(
     crud.create_event(db, event)
 
     return {"session_id": event.session_id}
+
+
+@router.get("/event/page_view", response_model=list[schemas.PageViewSummary])
+def get_page_view_summary(db: Session = Depends(get_db)):
+    output = crud.get_page_view_summary(db)
+    return output

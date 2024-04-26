@@ -22,3 +22,8 @@ class Event(BaseModel):
     ip_address: str
     type: str
     description: str
+
+
+class PageViewSummary(BaseModel):
+    path: str
+    total: int

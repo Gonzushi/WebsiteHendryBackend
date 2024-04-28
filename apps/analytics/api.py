@@ -33,3 +33,10 @@ def create_event(
 def get_page_view_summary(db: Session = Depends(get_db)):
     output = crud.get_page_view_summary(db)
     return output
+
+@router.get("/visitor/location")
+def get_location(db: Session = Depends(get_db)):
+    output = crud.get_visitors_location(db)
+    return output
+
+

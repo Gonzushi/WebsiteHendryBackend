@@ -47,3 +47,11 @@ def get_page_view_summary(db: Session) -> list[schemas.PageViewSummary]:
     df.rename(columns={"description": "path", "": "total"}, inplace=True)
     output = df.to_dict("records")
     return output
+
+
+def get_visitors_location(db: Session):
+    statement = text("""select latitude, longitude from visitors""")
+    data = db.execute(statement)
+    df = pd.DataFrame(data.all(), columns=data.keys())
+    output = df.to_dict("records")
+    return output

@@ -26,6 +26,7 @@ app.include_router(project_map_api.router)
 
 origins = [
     "http://localhost:5173",
+    "http://localhost:3000",
     "https://hendrywidyanto.com",
     "https://www.hendrywidyanto.com",
 ]

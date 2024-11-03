@@ -7,7 +7,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from apps.analytics import api as analytics_api
-from apps.project_crud import api as project_api
+from apps.project_crud import api as project_crud_api
+from apps.project_map import api as project_map_api
 
 
 @asynccontextmanager
@@ -18,8 +19,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(project_api.router)
+app.include_router(project_crud_api.router)
 app.include_router(analytics_api.router)
+app.include_router(project_map_api.router)
+
 
 origins = [
     "http://localhost:5173",

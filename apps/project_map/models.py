@@ -1,4 +1,4 @@
-from sqlalchemy import Float, String, Integer, Numeric
+from sqlalchemy import Float, String, Integer, Numeric, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -16,10 +16,12 @@ class Location(Base):
     area: Mapped[int] = mapped_column(Integer, nullable=True)
     type: Mapped[str] = mapped_column(String(255), nullable=True)
     price: Mapped[float] = mapped_column(Float, nullable=True)
+    comment: Mapped[str] = mapped_column(Text, nullable=True) 
 
     def __repr__(self) -> str:
         return (
             f"Location(id={self.id!r}, latitude={self.latitude!r}, "
             f"longitude={self.longitude!r}, phone_number={self.phone_number!r}, "
-            f"area={self.area!r}, type={self.type!r}, price={self.price!r})"
+            f"area={self.area!r}, type={self.type!r}, price={self.price!r}, "
+            f"comment={self.comment!r})"
         )

@@ -8,6 +8,7 @@ class LocationBase(BaseModel):
     area: int | None
     type: str | None
     price: float | None
+    comment: str | None
 
 
 class LocationCreate(LocationBase):

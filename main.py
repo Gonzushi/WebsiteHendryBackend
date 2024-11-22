@@ -1,5 +1,6 @@
 import os
 import signal
+import aiohttp
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
@@ -15,8 +16,11 @@ from apps.rumah123 import api as rumah123_api
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     load_dotenv()
+    session = aiohttp.ClientSession()
+    app.state.session = session
     yield
     os.kill(os.getpid(), signal.SIGTERM)
+    await session.close()
 
 
 app = FastAPI(lifespan=lifespan)
